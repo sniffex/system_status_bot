@@ -11,11 +11,12 @@ if (!token || !chatId) {
     process.exit(1);
 }
 
-const bot = new TelegramBot(token, { polling: true });
+// Initialize the bot using webhooks
+const bot = new TelegramBot(token, { webHook: true });
+bot.setWebHook(`http://localhost/bot${token}`);
 
 // Log that the bot is running
-console.log('Bot is running with token:', token);
-console.log('Sending messages to chat ID:', chatId);
+console.log('Bot is running with webhook mode.');
 
 // Function to get PM2 status
 const checkPM2Status = () => {
@@ -70,4 +71,4 @@ setInterval(() => {
     console.log('Running scheduled checks...');
     checkPM2Status();
     sendLogs();
-}, 3600000);  // 1 hour in milliseconds
+}, 1000);  // 1 hour in milliseconds
